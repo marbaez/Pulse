@@ -1,0 +1,7 @@
+.brand{color:inherit;text-decoration:none}
+.header-controls{display:flex;align-items:center;gap:18px}
+.languages{display:flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--white)}
+.languages button{min-width:35px;min-height:32px;padding:3px 6px;border:0;border-radius:6px;background:transparent;color:var(--muted);font-size:12px;font-weight:800}
+.languages button[aria-pressed="true"]{background:var(--soft);color:var(--green)}
+.languages button:hover:not([aria-pressed="true"]){background:var(--paper)}
+.brand:focus-visible,.app-tile:focus-visible,.languages button:focus-visible{outline:3px solid #628633;outline-offset:3px}

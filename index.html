@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f4ed">
+<title>Pulso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="barra.css">
+<style>
+:root{color-scheme:light;--paper:#f5f4ed;--white:#fffefa;--ink:#18251c;--muted:#566256;--line:#dedfd4;--green:#14291e;--lime:#ddfa77;--soft:#eaf2dd}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;background:var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}
+button{font:inherit;cursor:pointer}
+.shell{width:min(1100px,calc(100% - 64px));margin:auto}
+.mast{border-bottom:1px solid var(--line)}
+.mast .shell{height:70px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font:800 25px Geist,system-ui,sans-serif;letter-spacing:-.065em}
+.logo{width:34px;height:34px;display:flex;align-items:center;justify-content:center;gap:3px;border-radius:10px;background:var(--green)}
+.logo i{width:3px;height:10px;border-radius:3px;background:var(--lime)}
+.logo i:nth-child(2){height:19px}
+.logo i:nth-child(3){height:14px}
+main{padding:clamp(38px,8vw,86px) 0 64px}
+h1{margin:0 0 32px;font:800 clamp(40px,7vw,66px)/1.05 Geist,system-ui,sans-serif;letter-spacing:-.075em}
+.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(124px,1fr));gap:24px;max-width:840px;list-style:none;margin:0;padding:0}
+.app-tile{display:grid;justify-items:center;gap:12px;width:100%;padding:14px 4px 12px;color:var(--ink);text-decoration:none;font-weight:700;border-radius:19px}
+.app-tile:hover{background:#e9ecdf}
+.app-icon{position:relative;isolation:isolate;overflow:hidden;display:grid;place-items:center;width:96px;aspect-ratio:1;border-radius:24px;border:1px solid #294433;background:radial-gradient(circle at 33% 20%,#335842,#14291e 74%);box-shadow:0 7px 14px #172a2226}
+.app-icon::before{content:"";position:absolute;inset:0;background:radial-gradient(#f3fedf 1px,transparent 1px) 0 0/10px 10px;opacity:.10;z-index:-1}
+.metronome-icon{position:relative;width:50px;height:62px;margin-top:3px}
+.metronome-icon::before,.metronome-icon::after{content:"";position:absolute;inset:0;clip-path:polygon(23% 0,77% 0,100% 100%,0 100%)}
+.metronome-icon::before{background:#a6bc9e}
+.metronome-icon::after{inset:2px;background:#233d2e}
+.dial-marks{position:absolute;z-index:1;top:10px;left:18px;width:14px;height:34px;background:repeating-linear-gradient(to bottom,#a6bc9e 0 1px,transparent 1px 6px);clip-path:polygon(15% 0,85% 0,100% 100%,0 100%)}
+.pendulum{position:absolute;z-index:2;bottom:9px;left:23px;width:3px;height:52px;background:var(--lime);border-radius:3px;transform:rotate(24deg);transform-origin:bottom}
+.pendulum::before{content:"";position:absolute;left:-4px;top:12px;width:11px;height:6px;border-radius:2px;background:var(--lime)}
+.base{position:absolute;z-index:3;bottom:0;left:-3px;width:56px;height:7px;border-radius:2px;background:#cfe0c1}
+@media(max-width:900px){.shell{width:calc(100% - 40px)}}
+@media(max-width:690px){.shell{width:calc(100% - 28px)}.mast .shell{height:57px}.apps{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px}.app-icon{width:80px;border-radius:20px}.metronome-icon{scale:.85}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="shell">
+    <a class="brand" href="index.html" data-page="index.html" data-i18n-label="home" aria-label="Inicio de Pulso"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>Pulso</a>
+    <div class="languages" role="group" aria-label="Idioma" data-i18n-label="language">
+      <button type="button" data-language="es" lang="es" aria-label="Español" aria-pressed="true">ES</button>
+      <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+<main class="shell">
+  <h1 data-i18n="tools">Aplicaciones</h1>
+  <ul class="apps">
+    <li>
+      <a class="app-tile" href="Pulso.html" data-page="Pulso.html">
+        <span class="app-icon" aria-hidden="true"><span class="metronome-icon"><i class="dial-marks"></i><i class="pendulum"></i><i class="base"></i></span></span>
+        <span data-i18n="metronome">Metrónomo</span>
+      </a>
+    </li>
+  </ul>
+</main>
+<script src="idiomas.js"></script>
+<script>initLanguage();</script>
+</body>
+</html>

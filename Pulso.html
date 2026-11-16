@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f5f4ed">
+<title>Pulso — Metrónomo</title>
+<link rel="stylesheet" href="barra.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--paper:#f5f4ed;--white:#fffefa;--ink:#18251c;--muted:#566256;--line:#dedfd4;--green:#14291e;--lime:#ddfa77;--soft:#eaf2dd;--orange:#ffbd8c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif}button,input,select{font:inherit;color:inherit}button,select,input[type=range]{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #628633;outline-offset:3px}button{border:1px solid var(--line);background:var(--white);border-radius:10px;font-weight:700;transition:background .15s,color .15s,border-color .15s}button:hover{border-color:#839279}button:disabled{cursor:default;opacity:.55}h1,h2,p{margin:0}h1,h2,.brand{font-family:Geist,system-ui,sans-serif}h1{font-size:clamp(42px,6vw,66px);font-weight:800;letter-spacing:-.075em;line-height:1.07}h2{font-size:21px;letter-spacing:-.045em;font-weight:800}.shell{width:min(1100px,calc(100% - 64px));margin:auto}.mast{border-bottom:1px solid var(--line)}.mast .shell{height:70px;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;font-size:25px;letter-spacing:-.065em;display:flex;align-items:center;gap:10px}.logo{width:34px;height:34px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;gap:3px}.logo i{width:3px;border-radius:3px;height:10px;background:var(--lime)}.logo i:nth-child(2){height:19px}.logo i:nth-child(3){height:14px}.key{font-size:12px;color:var(--muted);font-weight:600;display:flex;gap:8px;align-items:center}kbd{font:inherit;background:var(--white);border:1px solid var(--line);border-radius:5px;padding:4px 8px}
+main{padding:31px 0 42px}.intro{margin-bottom:24px}.intro p{margin-top:8px;color:var(--muted);font-size:15px}.card{background:var(--white);border:1px solid var(--line);border-radius:21px;padding:20px}.tempo{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#294735 0%,#192f23 56%,#13251b 100%);color:#fffef2;border:1px solid #213829;display:flex;flex-direction:column;justify-content:space-between;padding:20px 24px}.tempo:before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(#ecffda 1px,transparent 1px);background-size:17px 17px;opacity:.065;mask-image:linear-gradient(135deg,#000,transparent 67%,#000)}.tempo header,.card header,.rhythm-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.tempo h2{font-size:17px}.tap{padding:8px 13px;background:#ffffff0d;border-color:#ffffff38;color:#fffef2;font-size:12px}.tap:hover{background:#ffffff1a}.dial-row{display:flex;align-items:center;justify-content:center;gap:16px}.dial{width:252px;aspect-ratio:1;position:relative;display:grid;place-items:center;flex-shrink:0}.ring{position:absolute;inset:0;pointer-events:none}.tick{position:absolute;left:calc(50% - 1px);top:0;width:2px;height:100%;transform:rotate(var(--angle))}.tick:before{content:"";display:block;height:8px;background:#73927d;border-radius:2px;opacity:.66}.tick.major:before{height:13px;background:#a7bea0}.tick.passed:before{background:var(--lime);opacity:.9}.tick.current:before{height:15px;width:4px;margin-left:-1px;box-shadow:0 0 9px #ddfa7760}.dial-value{text-align:center;margin-top:3px;position:relative}.dial-value input{width:174px;text-align:center;display:block;border:0;border-radius:12px;background:transparent;color:var(--lime);font-family:Geist,sans-serif;font-size:81px;font-weight:800;letter-spacing:-.095em;line-height:1;padding:0 8px 0 0;appearance:textfield;cursor:text}.dial-value input::-webkit-inner-spin-button,.dial-value input::-webkit-outer-spin-button{appearance:none;margin:0}.dial-value span{display:block;font-size:12px;font-weight:800;letter-spacing:.17em;color:#e8eddc;margin-top:5px}.step{width:42px;height:42px;flex-shrink:0;border-radius:50%;background:#ffffff0b;border-color:#ffffff40;color:#fffef2;font-size:23px;line-height:1}.step:hover{background:#ffffff20}.tempo-range{display:block;width:min(310px,100%);margin:-10px auto 18px;accent-color:var(--lime);height:14px}.play{background:var(--lime);border-color:var(--lime);color:#172716;width:100%;padding:13px;font-size:16px;min-height:49px}.play:hover{background:#edffa9;border-color:#edffa9}.play-icon{display:inline-block;margin-right:8px;font-size:13px}.card label.title,.label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}.config{display:grid;grid-template-columns:1fr 1.25fr;gap:12px;margin-top:15px}select{width:100%;min-height:38px;border:1px solid var(--line);border-radius:9px;background:#f7f8f2;padding:4px 8px;font-weight:700;font-size:14px}.quick{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:5px}.quick button{min-height:33px;font-size:12px;padding:4px;white-space:nowrap}.quick button[aria-pressed=true]{background:var(--soft);border-color:#a8ba96;color:#284220}.count{margin-top:13px}.time{font-size:22px;font-family:Geist,sans-serif;font-weight:800;letter-spacing:-.05em;font-variant-numeric:tabular-nums}.sound-row{display:grid;grid-template-columns:minmax(90px,.8fr) 1fr auto;align-items:end;gap:10px;margin-top:9px}.sound-row select{min-height:33px}.volume{width:100%;accent-color:#365b36;height:18px;margin:0 0 7px;display:block}.mute{font-size:11px;min-height:33px;padding:4px 8px}.rhythm{margin-top:16px}.rhythm-head{align-items:flex-start}.rhythm-head p{font-size:13px;color:var(--muted);margin-top:4px}.rhythm-head select{width:auto;min-height:34px}.pattern{display:grid;grid-template-columns:repeat(var(--groups),minmax(0,1fr));gap:10px;margin-top:14px}.beat{display:grid;gap:4px;grid-template-columns:repeat(var(--sub),minmax(0,1fr));background:#f2f4eb;padding:5px;border-radius:11px}.cell{position:relative;min-width:0;min-height:47px;padding:3px 1px;display:grid;align-content:center;justify-items:center;gap:1px;background:#fffefa;color:#4f624f;border-color:#e0e4d8;border-radius:7px}.cell .count-label{font-size:10px;font-weight:800}.cell .stroke{font-size:19px;line-height:1}.cell[data-mode=2]{background:var(--orange);color:#452918;border-color:#f2a875}.cell[data-mode=0]{background:transparent;border-style:dashed;color:#5f6a5c}.cell.active{outline:2px solid #33592b;outline-offset:-2px;background:var(--lime);color:#1b321b}.legend{display:flex;flex-wrap:wrap;gap:6px 15px;align-items:center;font-size:11px;color:var(--muted);margin-top:10px}.legend b{color:var(--ink);font-size:15px;margin-right:3px}.legend .accent{color:#884718}.status{color:#e3ebdd;font-size:12px;text-align:center;margin-top:8px;min-height:17px}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:900px){.shell{width:calc(100% - 40px)}.dial-row{gap:9px}.dial{width:215px}.dial-value input{font-size:70px;width:151px}.tempo,.card{padding:16px}.pattern{grid-template-columns:repeat(var(--compact),minmax(0,1fr))}}
+@media(max-width:690px){.shell{width:calc(100% - 28px)}.mast .shell{height:57px}.key{display:none}main{padding-top:22px}.intro{margin-bottom:17px}.dial{width:231px}.tempo-range{margin-top:-8px}.rhythm{margin-top:12px}.rhythm-head{flex-wrap:wrap}.pattern{grid-template-columns:repeat(var(--mobile),minmax(0,1fr));gap:6px}.beat{padding:4px}.cell{min-height:42px}}
+@media(max-width:360px){.dial{width:191px}.dial-value input{font-size:60px;width:135px}.step{width:35px;height:35px}.quick button{font-size:11px}}
+.cell[data-mode="0"].active{background:#d6ddd1;color:#3e4e3e;outline-color:#788876}
+.tempo .tempo-range{margin-bottom:10px}
+.pattern-preview{display:flex;flex-wrap:wrap;justify-content:center;gap:5px 8px;max-width:100%;margin:0 auto 12px}
+.preview-beat{display:flex;gap:3px;padding:3px;background:#ffffff0c;border-radius:6px}
+.preview-step{display:grid;place-items:center;width:15px;height:16px;border-radius:3px;background:#607c5d;color:#f5f8eb;font-size:11px;font-weight:800;line-height:1}
+.preview-step[data-mode="0"]{background:#394741;color:#9aa59f}
+.preview-step[data-mode="2"]{background:var(--orange);color:#452918}
+.preview-step.active{background:var(--lime);color:#1b321b;box-shadow:0 0 0 1px #efffb6}
+.preview-step[data-mode="0"].active{background:#66746c;color:#e3e8e3;box-shadow:0 0 0 1px #8f9c93}
+.pattern[data-custom="true"] .cell{min-height:57px}
+.pattern[data-custom="true"] .cell[data-mode="1"]:not(.active){background:#ddedc7;border-color:#88a575;color:#294724}
+.pattern[data-custom="true"] .cell[data-mode="0"]:not(.active){background:#edf0e9;border-color:#a8b2a1;color:#586454}
+.cell::after{display:none;content:attr(data-symbol);font-size:11px;line-height:1;font-weight:800}
+.pattern[data-custom="true"] .cell::after{display:block}
+.drum-control{display:flex;align-items:center;gap:8px;margin-top:13px;font-size:13px;font-weight:700;cursor:pointer}
+.drum-control input{width:17px;height:17px;margin:0;accent-color:#365b36;cursor:pointer}
+.save-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+.save-row[hidden]{display:none}
+.save-row button{padding:7px 11px;background:var(--soft);border-color:#a8ba96;font-size:13px}
+.save-row span{color:var(--muted);font-size:12px}
+.session-timer{margin-bottom:15px;padding-bottom:14px;border-bottom:1px solid #ffffff30}
+.session-timer header{margin-bottom:8px}
+.duration-range{display:block;width:100%;height:24px;margin:0;accent-color:var(--lime)}
+.duration-range:disabled{cursor:default;opacity:.6}
+.duration-scale{display:flex;justify-content:space-between;color:#e3ebdd;font-size:12px}
+.count-card .quick{margin-top:12px}
+main.shell{max-width:610px}
+.timer-title{display:flex;align-items:center;gap:9px}
+.settings-button{display:grid;place-items:center;width:36px;height:36px;padding:0;background:#ffffff13;color:#f7f8ea;border-color:#ffffff40}
+.settings-button span{font-size:22px;line-height:1}
+.settings-button:hover{background:#ffffff26;border-color:#ffffff80}
+.settings{width:min(740px,calc(100% - 28px));max-width:none;max-height:calc(100% - 28px);padding:20px;border:1px solid var(--line);border-radius:21px;background:var(--paper);color:var(--ink);box-shadow:0 18px 70px #101d1850;overscroll-behavior:contain}
+.settings::backdrop{background:#101e17a6}
+.settings-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.settings-header h2{font-size:27px}
+.settings-close{padding:8px 13px;font-size:13px}
+.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.settings .card{padding:16px}
+.settings-sound{grid-column:1/-1}
+@media(max-width:630px){.settings{padding:14px}.settings-grid{grid-template-columns:1fr}.settings .card{padding:13px}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="shell">
+    <a class="brand" href="index.html" data-page="index.html" data-i18n-label="home" aria-label="Inicio de Pulso"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>Pulso</a>
+    <div class="header-controls">
+    <span class="key"><kbd data-i18n="space">Espacio</kbd><span data-i18n="shortcut">Iniciar o parar</span></span>
+    <div class="languages" role="group" aria-label="Idioma" data-i18n-label="language">
+      <button type="button" data-language="es" lang="es" aria-label="Español" aria-pressed="true">ES</button>
+      <button type="button" data-language="en" lang="en" aria-label="English" aria-pressed="false">EN</button>
+    </div>
+    </div>
+  </div>
+</header>
+<main class="shell">
+<div class="intro"><h1 data-i18n="metronome">Metrónomo</h1><p data-i18n="practice">Ajusta el pulso y practica tu ritmo de guitarra.</p></div>
+<section class="tempo card" aria-labelledby="tempo-heading">
+<div class="session-timer" role="group" aria-labelledby="timer-heading">
+<header><div class="timer-title"><button type="button" class="settings-button" id="open-settings" aria-label="Abrir configuración" data-i18n-label="openSettings" aria-haspopup="dialog" aria-controls="settings"><span aria-hidden="true">⚙</span></button><h2 id="timer-heading" data-i18n="timer">Temporizador</h2></div><output class="time" id="remaining" for="duration-range" aria-label="Tiempo restante" data-i18n-label="remaining" aria-live="off">Libre</output></header>
+<input type="range" class="duration-range" id="duration-range" min="0" max="300" step="15" value="0" aria-label="Duración de la sesión" data-i18n-label="duration" aria-valuetext="Libre">
+<div class="duration-scale" aria-hidden="true"><span data-i18n="free">Libre</span><span>5 min</span></div>
+</div>
+<header><h2 id="tempo-heading" data-i18n="tempo">Tempo</h2><button class="tap" id="tap" data-i18n="tap">Marcar tempo</button></header>
+<div class="dial-row"><button class="step" id="slower" aria-label="Bajar un BPM" data-i18n-label="slower">−</button><div class="dial"><div class="ring" id="ring" aria-hidden="true"></div><label class="dial-value"><input type="number" id="bpm" min="30" max="300" inputmode="numeric" value="96" aria-label="Tempo en BPM" data-i18n-label="bpm"><span aria-hidden="true">BPM</span></label></div><button class="step" id="faster" aria-label="Subir un BPM" data-i18n-label="faster">+</button></div>
+<input type="range" id="tempo-range" class="tempo-range" min="30" max="300" value="96" aria-label="Ajustar el tempo" data-i18n-label="adjustTempo">
+<div id="pattern-preview" class="pattern-preview" aria-hidden="true"></div>
+<button id="play" class="play"><span class="play-icon" aria-hidden="true">▶</span><span data-i18n="start">Iniciar</span></button>
+<p id="status" class="status" role="status" data-i18n="ready">Listo para practicar</p>
+</section>
+</main>
+<dialog id="settings" class="settings" aria-labelledby="settings-heading">
+<header class="settings-header">
+<h2 id="settings-heading" data-i18n="settings">Configuración</h2>
+<form method="dialog"><button class="settings-close" autofocus data-i18n="close">Cerrar</button></form>
+</header>
+<div class="settings-grid">
+<section class="card" aria-labelledby="compas-heading">
+<header><h2 id="compas-heading" data-i18n="meterAndSubdivision">Compás y subdivisión</h2></header>
+<div class="config">
+<label><span class="title" data-i18n="meter">Compás</span><select id="meter"><option>2/4</option><option>3/4</option><option selected>4/4</option><option>5/4</option><option>7/4</option><option>6/8</option><option>7/8</option><option>9/8</option><option>12/8</option></select></label>
+<label><span class="title" data-i18n="subdivision">Subdivisión</span><select id="division"><option value="1">Un clic por pulso</option><option value="2" selected>Dos por pulso</option><option value="3">Tres por pulso</option><option value="4">Cuatro por pulso</option></select></label>
+</div>
+</section>
+<section class="card count-card" aria-labelledby="count-heading">
+<h2 id="count-heading" data-i18n="countIn">Cuenta de entrada</h2>
+<div class="quick" id="counts" role="group" aria-label="Cuenta de entrada" data-i18n-label="countIn"><button data-value="0" aria-pressed="false" data-i18n="noCount">Sin cuenta</button><button data-value="3" aria-pressed="false" data-i18n="threeBeats">3 pulsos</button><button data-value="4" aria-pressed="true" data-i18n="fourBeats">4 pulsos</button></div>
+</section>
+<section class="card settings-sound" aria-labelledby="sound-heading">
+<header><h2 id="sound-heading" data-i18n="sound">Sonido</h2></header>
+<div class="sound-row"><label><span class="sr" data-i18n="tone">Timbre</span><select id="tone"><option value="wood" data-i18n="wood">Madera</option><option value="click" data-i18n="click">Clic</option><option value="digital" data-i18n="digital">Digital</option></select></label><label><span class="sr" data-i18n="volume">Volumen</span><input id="volume" type="range" min="0" max="100" value="67" class="volume"></label><button id="mute" class="mute" aria-pressed="false" data-i18n="mute">Silenciar</button></div>
+<label class="drum-control"><input id="drums" type="checkbox"> <span data-i18n="drums">Batería de acompañamiento</span></label>
+</section>
+</div>
+<section class="card rhythm" aria-labelledby="rhythm-heading">
+<div class="rhythm-head"><div><h2 id="rhythm-heading" data-i18n="pattern">Patrón de guitarra</h2><p data-i18n="patternHelp">Toca una casilla para alternar entre clic, acento y silencio.</p></div>
+<label><span class="sr" data-i18n="preset">Patrón predefinido</span><select id="preset"><option value="all" data-i18n="all">Todos los golpes</option><option value="down" data-i18n="downOnly">Solo púa ↓</option><option value="up" data-i18n="upOnly">Solo contrapúa ↑</option><option value="custom" data-i18n="custom">Personalizado</option></select></label></div>
+<div id="pattern" class="pattern"></div>
+<div class="save-row" id="save-row" hidden><button id="save-pattern" data-i18n="save">Guardar patrón</button><span id="save-status" role="status"></span></div>
+<div class="legend"><span><b>↓</b> <span data-i18n="downstroke">Púa</span></span><span><b>↑</b> <span data-i18n="upstroke">Contrapúa</span></span><span><b>✓</b> <span data-i18n="click">Clic</span></span><span><b class="accent">●</b> <span data-i18n="accent">Acento</span></span><span><b>−</b> <span data-i18n="silence">Silencio</span></span></div>
+</section>
+</dialog>
+<script src="idiomas.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const bpmInput = $('bpm');
+const slider = $('tempo-range');
+const status = $('status');
+const remaining = $('remaining');
+const durationRange = $('duration-range');
+const playButton = $('play');
+const settings = $('settings');
+const ticks = Array.from({length: 45}, (_, index) => {
+  const tick = document.createElement('i');
+  tick.className = 'tick' + (index % 4 === 0 ? ' major' : '');
+  tick.style.setProperty('--angle', (index * 6 - 132) + 'deg');
+  $('ring').append(tick);
+  return tick;
+});
+let bpm = 96;
+let duration = 0;
+let countIn = 4;
+let lastTap = 0;
+let tapIntervals = [];
+let modes = [];
+let cells = [];
+let previewSteps = [];
+const patternDrafts = new Map();
+const patternStorageKey = 'pulso.patterns.v1';
+let savedPatterns = {};
+try {
+  const stored = JSON.parse(localStorage.getItem(patternStorageKey));
+  if (stored && typeof stored === 'object' && !Array.isArray(stored)) savedPatterns = stored;
+} catch {
+  // The pattern editor also works when browser storage is unavailable.
+}
+let audio;
+let output;
+let drumNoise;
+let session;
+let startRequest = 0;
+let activeStep;
+
+function setTempo(raw) {
+  if (raw !== '' && Number.isFinite(Number(raw))) {
+    bpm = Math.max(30, Math.min(300, Math.round(Number(raw))));
+  }
+  bpmInput.value = slider.value = bpm;
+  const position = Math.round((bpm - 30) / 270 * (ticks.length - 1));
+  ticks.forEach((tick, index) => {
+    tick.classList.toggle('passed', index <= position);
+    tick.classList.toggle('current', index === position);
+  });
+}
+function pulseCount() {
+  const meter = $('meter').value;
+  return {'6/8': 2, '9/8': 3, '12/8': 4}[meter] ?? Number(meter.split('/')[0]);
+}
+function isCompoundMeter() {
+  return ['6/8', '9/8', '12/8'].includes($('meter').value);
+}
+function subdivisionLabels() {
+  const meter = $('meter').value;
+  const labels = [t('onePerBeat'), t('eighth'), t('triplets'), t('sixteenth')];
+  if (isCompoundMeter()) {
+    labels.splice(1, 3, t('twoPerBeat'), t('compoundEighth'), t('fourPerBeat'));
+  }
+  if (meter === '7/8') labels.splice(1, 3, t('sixteenthPair'), t('threePerBeat'), t('thirtySecond'));
+  Array.from($('division').options).forEach((option, index) => option.text = labels[index]);
+}
+function setCell(index, mode) {
+  modes[index] = mode;
+  cells[index].dataset.mode = mode;
+  previewSteps[index].dataset.mode = mode;
+  cells[index].dataset.symbol = ['−', '✓', '●'][mode];
+  labelCell(index);
+}
+function labelCell(index) {
+  const cell = cells[index];
+  const sub = Number($('division').value);
+  cell.setAttribute('aria-label', t('step', {
+    beat: Math.floor(index / sub) + 1,
+    slot: index % sub + 1,
+    direction: t(cell.dataset.direction).toLocaleLowerCase(pulsoLanguage),
+    sound: t(['silence', 'click', 'accent'][modes[index]]).toLocaleLowerCase(pulsoLanguage)
+  }));
+}
+function labelPattern() {
+  const sub = Number($('division').value);
+  const ternary = pulsoLanguage === 'es' ? ['la', 'li'] : isCompoundMeter() ? ['&', 'a'] : ['trip', 'let'];
+  const syllables = {2: ['&'], 3: ternary, 4: ['e', '&', 'a']};
+  cells.forEach((cell, index) => {
+    const slot = index % sub;
+    cell.firstElementChild.textContent = slot ? syllables[sub][slot - 1] : Math.floor(index / sub) + 1;
+    labelCell(index);
+  });
+}
+function showActiveStep(index) {
+  cells[activeStep]?.classList.remove('active');
+  previewSteps[activeStep]?.classList.remove('active');
+  activeStep = index;
+  cells[index]?.classList.add('active');
+  previewSteps[index]?.classList.add('active');
+}
+function patternKey() {
+  return $('meter').value + ':' + $('division').value;
+}
+function syncPatternEditor(message = '') {
+  const custom = $('preset').value === 'custom';
+  $('pattern').dataset.custom = String(custom);
+  $('save-row').hidden = !custom;
+  setCopy($('save-status'), custom ? message : '');
+}
+function renderPattern() {
+  const pulses = pulseCount();
+  const sub = Number($('division').value);
+  const preset = $('preset');
+  const key = patternKey();
+  const stored = savedPatterns[key];
+  const saved = Array.isArray(stored) && stored.length === pulses * sub
+    && stored.every(mode => mode === 0 || mode === 1 || mode === 2) ? stored : undefined;
+  const draft = patternDrafts.get(key);
+  const customModes = preset.value === 'custom' ? draft ?? saved ?? Array(pulses * sub).fill(0) : undefined;
+  syncPatternEditor(draft ? 'unsaved' : saved ? 'saved' : '');
+  const pattern = $('pattern');
+  const preview = $('pattern-preview');
+  pattern.replaceChildren();
+  preview.replaceChildren();
+  pattern.style.setProperty('--groups', pulses);
+  pattern.style.setProperty('--compact', pulses <= 4 ? pulses : Math.ceil(pulses / 2));
+  pattern.style.setProperty('--mobile', pulses === 3 ? 3 : 2);
+  modes = [];
+  cells = [];
+  previewSteps = [];
+  for (let beat = 0; beat < pulses; beat++) {
+    const group = document.createElement('div');
+    group.className = 'beat';
+    group.style.setProperty('--sub', sub);
+    const previewBeat = document.createElement('div');
+    previewBeat.className = 'preview-beat';
+    for (let slot = 0; slot < sub; slot++) {
+      const index = beat * sub + slot;
+      const upstroke = sub > 1 && (sub === 3 ? index % 2 === 1 : slot % 2 === 1);
+      const cell = document.createElement('button');
+      cell.className = 'cell';
+      cell.dataset.direction = upstroke ? 'upstroke' : 'downstroke';
+      const countLabel = document.createElement('span');
+      countLabel.className = 'count-label';
+      const stroke = document.createElement('span');
+      stroke.className = 'stroke';
+      stroke.textContent = upstroke ? '↑' : '↓';
+      cell.append(countLabel, stroke);
+      cells.push(cell);
+      const previewStep = document.createElement('span');
+      previewStep.className = 'preview-step';
+      previewStep.textContent = stroke.textContent;
+      previewSteps.push(previewStep);
+      previewBeat.append(previewStep);
+      const audible = preset.value === 'up' ? upstroke : preset.value !== 'down' || !upstroke;
+      setCell(index, customModes?.[index] ?? (audible ? (index === 0 ? 2 : 1) : 0));
+      cell.addEventListener('click', () => {
+        setCell(index, (modes[index] + 1) % 3);
+        preset.value = 'custom';
+        patternDrafts.set(key, modes.slice());
+        syncPatternEditor('unsaved');
+      });
+      group.append(cell);
+    }
+    pattern.append(group);
+    preview.append(previewBeat);
+  }
+  labelPattern();
+  showActiveStep(activeStep);
+}
+function formatTime(seconds) {
+  return Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0');
+}
+function labelDuration() {
+  durationRange.setAttribute('aria-valuetext', duration ? t('seconds', {seconds: duration}) : t('free'));
+}
+function changeVolume() {
+  if (output) output.gain.setTargetAtTime($('mute').getAttribute('aria-pressed') === 'true' ? 0 : Number($('volume').value) / 100, audio.currentTime, .012);
+}
+function clickAt(time, strength) {
+  if (!strength) return;
+  const options = {wood: ['sine', 820, .051], click: ['triangle', 1100, .026], digital: ['square', 520, .044]};
+  const [type, frequency, decay] = options[$('tone').value];
+  const oscillator = audio.createOscillator();
+  const envelope = audio.createGain();
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(frequency * (strength === 2 ? 1.54 : strength === 3 ? .73 : 1), time);
+  if (type === 'sine') oscillator.frequency.exponentialRampToValueAtTime(frequency * .49, time + decay);
+  envelope.gain.setValueAtTime(.001, time);
+  envelope.gain.exponentialRampToValueAtTime(strength === 2 ? .38 : strength === 3 ? .11 : .22, time + .003);
+  envelope.gain.exponentialRampToValueAtTime(.001, time + decay);
+  oscillator.connect(envelope);
+  envelope.connect(output);
+  oscillator.start(time);
+  oscillator.stop(time + decay);
+}
+function drumHit(time, instrument) {
+  const [peak, decay] = {
+    kick: [.50, .14],
+    snare: [.23, .095],
+    hat: [.085, .034]
+  }[instrument];
+  const envelope = audio.createGain();
+  envelope.gain.setValueAtTime(peak, time);
+  envelope.gain.exponentialRampToValueAtTime(.001, time + decay);
+  envelope.connect(output);
+
+  let source;
+  if (instrument === 'kick') {
+    source = audio.createOscillator();
+    source.frequency.setValueAtTime(145, time);
+    source.frequency.exponentialRampToValueAtTime(46, time + .075);
+    source.connect(envelope);
+  } else {
+    if (!drumNoise) {
+      drumNoise = audio.createBuffer(1, Math.ceil(audio.sampleRate * .12), audio.sampleRate);
+      const samples = drumNoise.getChannelData(0);
+      for (let i = 0; i < samples.length; i++) samples[i] = Math.random() * 2 - 1;
+    }
+    const filter = audio.createBiquadFilter();
+    filter.type = instrument === 'hat' ? 'highpass' : 'bandpass';
+    filter.frequency.value = instrument === 'hat' ? 7000 : 1650;
+    filter.Q.value = .7;
+    source = audio.createBufferSource();
+    source.buffer = drumNoise;
+    source.connect(filter);
+    filter.connect(envelope);
+  }
+  source.start(time);
+  source.stop(time + decay);
+}
+function drumAt(time, index, sub) {
+  const beat = Math.floor(index / sub);
+  const slot = index % sub;
+  if (slot === 0) drumHit(time, beat % 2 === 0 ? 'kick' : 'snare');
+  if (slot === 0 || slot === Math.floor(sub / 2)) drumHit(time, 'hat');
+}
+function setTransport(running) {
+  playButton.firstElementChild.textContent = running ? '■' : '▶';
+  setCopy(playButton.lastElementChild, running ? 'stop' : 'start');
+  durationRange.disabled = running;
+  document.querySelectorAll('#counts button, #meter, #division').forEach(control => control.disabled = running);
+}
+function stop(finished = false) {
+  startRequest++;
+  if (session) {
+    clearInterval(session.scheduler);
+    cancelAnimationFrame(session.frame);
+  }
+  session = undefined;
+  if (output) { output.disconnect(); output = undefined; }
+  showActiveStep(undefined);
+  setTransport(false);
+  setCopy(status, finished ? 'finished' : 'ready');
+  remaining.textContent = duration ? formatTime(finished ? 0 : duration) : t('free');
+}
+function schedule() {
+  const now = audio.currentTime;
+  const current = session;
+  const beatLength = 60 / bpm;
+  const sub = Number($('division').value);
+  if (current.next < now) current.next = now + .01;
+  while (current.next < now + .10) {
+    const time = current.next;
+    if (current.counted < countIn) {
+      clickAt(time, current.counted === 0 ? 2 : 1);
+      current.events.push({time, count: ++current.counted});
+      current.next += beatLength;
+      continue;
+    }
+    if (current.first === undefined) {
+      current.first = time;
+      current.end = duration ? time + duration : Infinity;
+    }
+    if (time >= current.end) break;
+    const index = current.index++ % modes.length;
+    const mode = modes[index];
+    clickAt(time, mode === 1 && index % sub !== 0 ? 3 : mode);
+    if ($('drums').checked) drumAt(time, index, sub);
+    current.events.push({time, index});
+    current.next += beatLength / sub;
+  }
+  if (now >= current.end) stop(true);
+}
+function animate() {
+  const current = session;
+  const now = audio.currentTime;
+  while (current.events.length && current.events[0].time <= now) {
+    const event = current.events.shift();
+    if (event.count) {
+      setCopy(status, 'countProgress', {current: event.count, total: countIn});
+    } else {
+      if (status.dataset.i18n !== 'playing') setCopy(status, 'playing');
+      showActiveStep(event.index);
+    }
+  }
+  if (duration && now >= current.first) {
+    const time = formatTime(Math.max(0, Math.ceil(current.end - now)));
+    if (remaining.textContent !== time) remaining.textContent = time;
+  }
+  current.frame = requestAnimationFrame(animate);
+}
+async function toggle() {
+  if (session || playButton.dataset.starting) {
+    stop();
+    delete playButton.dataset.starting;
+    return;
+  }
+  const request = ++startRequest;
+  playButton.dataset.starting = String(request);
+  try {
+    audio ??= new (window.AudioContext || window.webkitAudioContext)();
+    await audio.resume();
+    if (request !== startRequest) return;
+    output = audio.createGain();
+    output.gain.value = 0;
+    output.connect(audio.destination);
+    changeVolume();
+    session = {next: audio.currentTime + .06, counted: 0, index: 0, events: [], end: Infinity};
+    setTransport(true);
+    remaining.textContent = duration ? formatTime(duration) : t('free');
+    setCopy(status, countIn ? 'prepare' : 'playing');
+    schedule();
+    session.scheduler = setInterval(schedule, 25);
+    session.frame = requestAnimationFrame(animate);
+  } catch {
+    if (request === startRequest) {
+      stop();
+      setCopy(status, 'audioError');
+    }
+  } finally {
+    if (playButton.dataset.starting === String(request)) delete playButton.dataset.starting;
+  }
+}
+bpmInput.addEventListener('change', () => setTempo(bpmInput.value));
+slider.addEventListener('input', () => setTempo(slider.value));
+$('slower').addEventListener('click', () => setTempo(bpm - 1));
+$('faster').addEventListener('click', () => setTempo(bpm + 1));
+$('tap').addEventListener('click', () => {
+  const now = performance.now();
+  const interval = now - lastTap;
+  if (!lastTap || interval > 2300) tapIntervals = [];
+  else if (interval >= 150) {
+    tapIntervals.push(interval);
+    if (tapIntervals.length > 4) tapIntervals.shift();
+    setTempo(60000 * tapIntervals.length / tapIntervals.reduce((a, b) => a + b));
+  }
+  lastTap = now;
+});
+$('meter').addEventListener('change', () => { subdivisionLabels(); renderPattern(); });
+$('division').addEventListener('change', renderPattern);
+$('preset').addEventListener('change', renderPattern);
+$('save-pattern').addEventListener('click', () => {
+  const key = patternKey();
+  const updated = {...savedPatterns, [key]: modes.slice()};
+  try {
+    localStorage.setItem(patternStorageKey, JSON.stringify(updated));
+    savedPatterns = updated;
+    patternDrafts.delete(key);
+    syncPatternEditor('saved');
+  } catch {
+    syncPatternEditor('saveError');
+  }
+});
+durationRange.addEventListener('input', () => {
+  duration = Number(durationRange.value);
+  remaining.textContent = duration ? formatTime(duration) : t('free');
+  labelDuration();
+});
+$('counts').addEventListener('click', event => {
+  const selected = event.target.closest('button');
+  if (!selected) return;
+  $('counts').querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button === selected)));
+  countIn = Number(selected.dataset.value);
+});
+$('volume').addEventListener('input', changeVolume);
+$('mute').addEventListener('click', event => {
+  const muted = event.currentTarget.getAttribute('aria-pressed') === 'true';
+  event.currentTarget.setAttribute('aria-pressed', String(!muted));
+  setCopy(event.currentTarget, muted ? 'mute' : 'unmute');
+  changeVolume();
+});
+$('open-settings').addEventListener('click', () => settings.showModal());
+playButton.addEventListener('click', toggle);
+window.addEventListener('keydown', event => {
+  if (settings.open || event.code !== 'Space' || event.repeat || event.target.closest('a, input, button, select, textarea, [contenteditable]')) return;
+  event.preventDefault();
+  toggle();
+});
+setTempo(bpm);
+renderPattern();
+initLanguage(() => {
+  document.title = 'Pulso — ' + t('metronome');
+  subdivisionLabels();
+  labelDuration();
+  if (!duration) remaining.textContent = t('free');
+  labelPattern();
+});
+</script>
+</body>
+</html>
