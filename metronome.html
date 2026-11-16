@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f5f4ed">
 <title>Pulso — Metrónomo</title>
-<link rel="stylesheet" href="barra.css">
+<link rel="stylesheet" href="navigation.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Geist:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -94,8 +94,8 @@ main.shell{max-width:610px}
 <form method="dialog"><button class="settings-close" autofocus data-i18n="close">Cerrar</button></form>
 </header>
 <div class="settings-grid">
-<section class="card" aria-labelledby="compas-heading">
-<header><h2 id="compas-heading" data-i18n="meterAndSubdivision">Compás y subdivisión</h2></header>
+<section class="card" aria-labelledby="time-signature-heading">
+<header><h2 id="time-signature-heading" data-i18n="meterAndSubdivision">Compás y subdivisión</h2></header>
 <div class="config">
 <label><span class="title" data-i18n="meter">Compás</span><select id="meter"><option>2/4</option><option>3/4</option><option selected>4/4</option><option>5/4</option><option>7/4</option><option>6/8</option><option>7/8</option><option>9/8</option><option>12/8</option></select></label>
 <label><span class="title" data-i18n="subdivision">Subdivisión</span><select id="division"><option value="1">Un clic por pulso</option><option value="2" selected>Dos por pulso</option><option value="3">Tres por pulso</option><option value="4">Cuatro por pulso</option></select></label>
@@ -119,7 +119,7 @@ main.shell{max-width:610px}
 <div class="legend"><span><b>↓</b> <span data-i18n="downstroke">Púa</span></span><span><b>↑</b> <span data-i18n="upstroke">Contrapúa</span></span><span><b>✓</b> <span data-i18n="click">Clic</span></span><span><b class="accent">●</b> <span data-i18n="accent">Acento</span></span><span><b>−</b> <span data-i18n="silence">Silencio</span></span></div>
 </section>
 </dialog>
-<script src="idiomas.js"></script>
+<script src="i18n.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 const bpmInput = $('bpm');

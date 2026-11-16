@@ -1,54 +1,54 @@
 # Pulso
 
-Pulso es una aplicación web de herramientas para practicar música. El metrónomo es la primera utilidad y se abre desde el lanzador de `index.html`. Pulsa **Pulso** en la barra superior para volver al inicio.
+Pulso is a web app for music practice. The metronome is the first tool. Open it from the launcher and select **Pulso** in the top bar to return home.
 
-## Versión inicial · v0.1.0
+## Features
 
-- Metrónomo de 30 a 300 BPM con ajuste directo, deslizador y función de marcar el tempo.
-- Compases y subdivisiones para practicar con corcheas, tresillos y semicorcheas, entre otras opciones.
-- Patrones de púa abajo y arriba, con clic, acento o silencio por golpe. Se puede guardar un patrón personalizado por compás y subdivisión en el navegador.
-- Cuenta de entrada opcional de tres o cuatro pulsos. El temporizador corre después de esa cuenta y admite hasta cinco minutos en pasos de quince segundos. En cero, la sesión es libre.
-- Tres timbres de clic, control de volumen y batería de acompañamiento opcional.
-- Interfaz en español e inglés, con selector **ES / EN** en la barra superior.
+- Set the metronome to 30–300 BPM with the number field, slider, or tap tempo.
+- Choose a time signature and subdivisions such as eighth notes, triplets, and sixteenth notes.
+- Practise downstrokes and upstrokes with a click, accent, or rest on each step. Save a custom pattern per time signature and subdivision in your browser.
+- Choose an optional three- or four-beat count-in. The session timer starts after the count-in and runs for up to five minutes in 15-second steps. Set it to zero for an unlimited session.
+- Choose one of three click sounds, adjust the volume, or enable drum backing.
+- Switch between Spanish and English with **ES / EN** in the top bar.
 
-## Abrir en local
+## Run locally
 
-Abre [index.html](index.html) en un navegador moderno. Puedes servir la carpeta por HTTP si quieres una URL local estable para las pruebas y el almacenamiento del navegador. Con Python 3, ejecuta desde la raíz del repositorio:
+Open [index.html](index.html) in a modern browser. To serve the app at a stable local URL, run this command from the repository root with Python 3.
 
 ```sh
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Entra en `http://127.0.0.1:8000/` y abre **Metrónomo**. El audio se activa al pulsar **Iniciar**. Los patrones y el idioma se guardan en el navegador cuando permite `localStorage`. Los enlaces entre pantallas también conservan el idioma mediante `?lang=es` o `?lang=en`.
+Visit `http://127.0.0.1:8000/`, open **Metronome**, and select **Start** to enable audio. The app uses `localStorage` for patterns and language preferences when the browser allows it. Links between screens also carry `?lang=en` or `?lang=es`.
 
-## Tecnología y estructura
+## Technology and structure
 
-Pulso usa HTML, CSS y JavaScript nativo. Se sirve como sitio estático, sin servidor de aplicación, dependencias que instalar ni paso de compilación. Las tipografías DM Sans y Geist se cargan desde Google Fonts, con fuentes del sistema como respaldo.
+Pulso is a static app built with HTML, CSS, and plain JavaScript. It requires no application server, package installation, or build step. DM Sans and Geist load from Google Fonts, with system fonts as fallbacks.
 
-| Archivo | Función |
+| File | Purpose |
 | --- | --- |
-| `index.html` | Lanzador y cuadrícula donde se añaden las futuras utilidades. |
-| `Pulso.html` | Interfaz y lógica del metrónomo, el temporizador, el editor de patrones y la reproducción. |
-| `barra.css` | Estilos compartidos de la navegación y el selector de idioma. |
-| `idiomas.js` | Textos en español e inglés, cambio de idioma y conservación de la preferencia al navegar. |
+| [index.html](index.html) | Launcher and app grid for current and future tools. |
+| [metronome.html](metronome.html) | Metronome interface, timer, pattern editor, and audio engine. |
+| [navigation.css](navigation.css) | Shared styles for the top bar and language selector. |
+| [i18n.js](i18n.js) | English and Spanish interface text, language switching, and navigation preferences. |
 
-El metrónomo usa el reloj de la Web Audio API para programar los clics y sintetizar el bombo, la caja y el charles. La animación lee ese mismo reloj para resaltar los golpes en el patrón compacto y en el editor.
+The metronome uses the Web Audio API clock to schedule clicks and synthesize the kick, snare, and hi-hat. Playback highlights in the compact pattern and editor follow the same clock.
 
-Para añadir otra utilidad, crea su pantalla, enlázala con una nueva tarjeta en `index.html` y reutiliza la barra superior y el selector de idioma. Añade los textos para ambos idiomas en `idiomas.js`.
+To add a tool, create its page, add a card to the launcher, and reuse the top bar and language selector. Add its English and Spanish interface strings to `i18n.js`.
 
-## Comprobación manual
+## Manual checks
 
-1. Abre el metrónomo desde el lanzador y cambia entre **ES** y **EN**. Pulsa **Pulso** y comprueba que se conserva el idioma.
-2. Ajusta el tempo, selecciona un compás y una subdivisión, y guarda un patrón con clics, acentos y silencios. Recarga y selecciona **Personalizado** con el mismo compás y subdivisión para recuperarlo.
-3. Inicia una sesión de 15 segundos con cuenta de entrada. Comprueba que el temporizador arranca después de la cuenta, que los resaltados siguen el pulso y que el metrónomo se detiene al llegar a cero.
-4. Prueba el modo **Libre**, la batería de acompañamiento y el control de volumen.
+1. Open the metronome from the launcher and switch between **ES** and **EN**. Select **Pulso** and check that the chosen language carries over.
+2. Set a tempo, time signature, and subdivision. Save a custom pattern with clicks, accents, and rests. Reload the page, choose the same time signature and subdivision, and select **Custom** to recover it.
+3. Start a 15-second session with a count-in. Check that the timer starts after the count-in, that the highlights follow the beat, and that playback stops at zero.
+4. Try **Unlimited** mode, drum backing, and the volume control.
 
-## Subir el repositorio a GitHub
+## Push to GitHub
 
-Crea un repositorio vacío en GitHub y copia su URL. Sustituye `URL_DEL_REPOSITORIO` por esa dirección y ejecuta desde esta carpeta:
+Create an empty GitHub repository and copy its URL. Replace `REPOSITORY_URL` below and run these commands from the repository root.
 
 ```sh
-git remote add origin URL_DEL_REPOSITORIO
+git remote add origin REPOSITORY_URL
 git push -u origin main
 git push origin v0.1.0
 ```
