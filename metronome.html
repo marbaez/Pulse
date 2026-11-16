@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f5f4ed">
-<title>Pulso — Metrónomo</title>
+<title>Pulse — Metrónomo</title>
 <link rel="stylesheet" href="navigation.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,7 +62,7 @@ main.shell{max-width:610px}
 <body>
 <header class="mast">
   <div class="shell">
-    <a class="brand" href="index.html" data-page="index.html" data-i18n-label="home" aria-label="Inicio de Pulso"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>Pulso</a>
+    <a class="brand" href="index.html" data-page="index.html" data-i18n-label="home" aria-label="Inicio de Pulse"><span class="logo" aria-hidden="true"><i></i><i></i><i></i></span>Pulse</a>
     <div class="header-controls">
     <span class="key"><kbd data-i18n="space">Espacio</kbd><span data-i18n="shortcut">Iniciar o parar</span></span>
     <div class="languages" role="group" aria-label="Idioma" data-i18n-label="language">
@@ -200,13 +200,13 @@ function labelCell(index) {
   cell.setAttribute('aria-label', t('step', {
     beat: Math.floor(index / sub) + 1,
     slot: index % sub + 1,
-    direction: t(cell.dataset.direction).toLocaleLowerCase(pulsoLanguage),
-    sound: t(['silence', 'click', 'accent'][modes[index]]).toLocaleLowerCase(pulsoLanguage)
+    direction: t(cell.dataset.direction).toLocaleLowerCase(pulseLanguage),
+    sound: t(['silence', 'click', 'accent'][modes[index]]).toLocaleLowerCase(pulseLanguage)
   }));
 }
 function labelPattern() {
   const sub = Number($('division').value);
-  const ternary = pulsoLanguage === 'es' ? ['la', 'li'] : isCompoundMeter() ? ['&', 'a'] : ['trip', 'let'];
+  const ternary = pulseLanguage === 'es' ? ['la', 'li'] : isCompoundMeter() ? ['&', 'a'] : ['trip', 'let'];
   const syllables = {2: ['&'], 3: ternary, 4: ['e', '&', 'a']};
   cells.forEach((cell, index) => {
     const slot = index % sub;
@@ -513,7 +513,7 @@ window.addEventListener('keydown', event => {
 setTempo(bpm);
 renderPattern();
 initLanguage(() => {
-  document.title = 'Pulso — ' + t('metronome');
+  document.title = 'Pulse — ' + t('metronome');
   subdivisionLabels();
   labelDuration();
   if (!duration) remaining.textContent = t('free');

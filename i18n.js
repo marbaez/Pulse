@@ -1,6 +1,6 @@
-const pulsoCopy = {
+const pulseCopy = {
   es: {
-    language: 'Idioma', home: 'Inicio de Pulso', tools: 'Aplicaciones', metronome: 'Metrónomo',
+    language: 'Idioma', home: 'Inicio de Pulse', tools: 'Aplicaciones', metronome: 'Metrónomo',
     space: 'Espacio', shortcut: 'Iniciar o parar', practice: 'Ajusta el pulso y practica tu ritmo de guitarra.',
     timer: 'Temporizador', remaining: 'Tiempo restante', duration: 'Duración de la sesión',
     free: 'Libre', seconds: '{seconds} segundos', tempo: 'Tempo', tap: 'Marcar tempo',
@@ -26,7 +26,7 @@ const pulsoCopy = {
     step: 'Pulso {beat}, golpe {slot}, {direction}, {sound}'
   },
   en: {
-    language: 'Language', home: 'Pulso home', tools: 'Apps', metronome: 'Metronome',
+    language: 'Language', home: 'Pulse home', tools: 'Apps', metronome: 'Metronome',
     space: 'Space', shortcut: 'Start or stop', practice: 'Set the tempo and practise your guitar rhythm.',
     timer: 'Timer', remaining: 'Time remaining', duration: 'Session duration',
     free: 'Unlimited', seconds: '{seconds} seconds', tempo: 'Tempo', tap: 'Tap tempo',
@@ -54,13 +54,13 @@ const pulsoCopy = {
 };
 const copyValues = new WeakMap();
 const supportedLanguage = value => value === 'es' || value === 'en';
-let pulsoLanguage = new URLSearchParams(location.search).get('lang');
-if (!supportedLanguage(pulsoLanguage)) {
-  try { pulsoLanguage = localStorage.getItem('pulso.language'); } catch {}
-  if (!supportedLanguage(pulsoLanguage)) pulsoLanguage = 'es';
+let pulseLanguage = new URLSearchParams(location.search).get('lang');
+if (!supportedLanguage(pulseLanguage)) {
+  try { pulseLanguage = localStorage.getItem('pulso.language'); } catch {}
+  if (!supportedLanguage(pulseLanguage)) pulseLanguage = 'es';
 }
 function t(key, values) {
-  return (pulsoCopy[pulsoLanguage][key] ?? '').replace(/\{(\w+)\}/g, (_, name) => values?.[name] ?? '');
+  return (pulseCopy[pulseLanguage][key] ?? '').replace(/\{(\w+)\}/g, (_, name) => values?.[name] ?? '');
 }
 function setCopy(element, key, values) {
   element.dataset.i18n = key;
@@ -70,7 +70,7 @@ function setCopy(element, key, values) {
 }
 function initLanguage(onChange = () => {}) {
   function refresh() {
-    document.documentElement.lang = pulsoLanguage;
+    document.documentElement.lang = pulseLanguage;
     document.querySelectorAll('[data-i18n]').forEach(element => {
       element.textContent = t(element.dataset.i18n, copyValues.get(element));
     });
@@ -78,19 +78,19 @@ function initLanguage(onChange = () => {}) {
       element.setAttribute('aria-label', t(element.dataset.i18nLabel));
     });
     document.querySelectorAll('a[data-page]').forEach(link => {
-      link.href = link.dataset.page + '?lang=' + pulsoLanguage;
+      link.href = link.dataset.page + '?lang=' + pulseLanguage;
     });
     document.querySelectorAll('[data-language]').forEach(button => {
-      button.setAttribute('aria-pressed', String(button.dataset.language === pulsoLanguage));
+      button.setAttribute('aria-pressed', String(button.dataset.language === pulseLanguage));
     });
     onChange();
   }
   document.querySelectorAll('[data-language]').forEach(button => {
     button.addEventListener('click', () => {
-      pulsoLanguage = button.dataset.language;
-      try { localStorage.setItem('pulso.language', pulsoLanguage); } catch {}
+      pulseLanguage = button.dataset.language;
+      try { localStorage.setItem('pulso.language', pulseLanguage); } catch {}
       const page = new URL(location.href);
-      page.searchParams.set('lang', pulsoLanguage);
+      page.searchParams.set('lang', pulseLanguage);
       try { history.replaceState(null, '', page.href); } catch {}
       refresh();
     });

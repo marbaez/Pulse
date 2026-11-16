@@ -1,6 +1,6 @@
-# Pulso
+# Pulse
 
-Pulso is a web app for music practice. The metronome is the first tool. Open it from the launcher and select **Pulso** in the top bar to return home.
+Pulse is a web app for music practice. The metronome is the first tool. Open it from the launcher and select **Pulse** in the top bar to return home.
 
 ## Features
 
@@ -23,7 +23,7 @@ Visit `http://127.0.0.1:8000/`, open **Metronome**, and select **Start** to enab
 
 ## Technology and structure
 
-Pulso is a static app built with HTML, CSS, and plain JavaScript. It requires no application server, package installation, or build step. DM Sans and Geist load from Google Fonts, with system fonts as fallbacks.
+Pulse is a static app built with HTML, CSS, and plain JavaScript. It requires no application server, package installation, or build step. DM Sans and Geist load from Google Fonts, with system fonts as fallbacks.
 
 | File | Purpose |
 | --- | --- |
@@ -38,7 +38,7 @@ To add a tool, create its page, add a card to the launcher, and reuse the top ba
 
 ## Manual checks
 
-1. Open the metronome from the launcher and switch between **ES** and **EN**. Select **Pulso** and check that the chosen language carries over.
+1. Open the metronome from the launcher and switch between **ES** and **EN**. Select **Pulse** and check that the chosen language carries over.
 2. Set a tempo, time signature, and subdivision. Save a custom pattern with clicks, accents, and rests. Reload the page, choose the same time signature and subdivision, and select **Custom** to recover it.
 3. Start a 15-second session with a count-in. Check that the timer starts after the count-in, that the highlights follow the beat, and that playback stops at zero.
 4. Try **Unlimited** mode, drum backing, and the volume control.
